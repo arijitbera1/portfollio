@@ -24,6 +24,10 @@
   --vh: 100svh;
 }
 
+#root {
+  isolation: isolate;
+}
+
 h1,
 h2,
 h3,
@@ -107,6 +111,12 @@ body {
   width: 100%;
   margin: auto;
   position: relative;
+}
+
+/* Keep the cursor above the page background but below every content section. */
+.portfolio-content {
+  position: relative;
+  z-index: 1;
 }
 
 .container1 {

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { config } from "../config";
+import ProjectImage from "../components/ProjectImage";
 import "./MyWorks.css";
 
 const MyWorks = () => {
@@ -22,7 +23,7 @@ const MyWorks = () => {
             <>
               <div className="myworks-card-number">0{index + 1}</div>
               <div className="myworks-card-image">
-                <img src={project.image} alt={project.title} loading="lazy" decoding="async" />
+                <ProjectImage src={project.image} alt={project.title} />
               </div>
               <div className="myworks-card-info">
                 <h3>{project.title}</h3>

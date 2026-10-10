@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import setCharacter from "./utils/character";
 import setLighting from "./utils/lighting";
-import { useLoading } from "../../context/LoadingProvider";
+import { useLoading } from "../../context/LoadingContext";
 import handleResize from "./utils/resizeUtils";
 import {
   handleMouseMove,
@@ -11,15 +11,17 @@ import {
   handleTouchMove,
 } from "./utils/mouseUtils";
 import setAnimations from "./utils/animationUtils";
-import { setProgress } from "../Loading";
+import { setProgress } from "../utils/loadingProgress";
+import { logCharacterError } from "./utils/assets";
 
 const Scene = () => {
   const canvasDiv = useRef<HTMLDivElement | null>(null);
   const hoverDivRef = useRef<HTMLDivElement>(null);
   const sceneRef = useRef(new THREE.Scene());
-  const { setLoading } = useLoading();
+  const { finishLoading } = useLoading();
 
   const [character, setChar] = useState<THREE.Object3D | null>(null);
+  const [isCharacterReady, setIsCharacterReady] = useState(false);
   useEffect(() => {
     if (canvasDiv.current) {
       let rect = canvasDiv.current.getBoundingClientRect();
@@ -27,10 +29,21 @@ const Scene = () => {
       const aspect = container.width / container.height;
       const scene = sceneRef.current;
 
-      const renderer = new THREE.WebGLRenderer({
-        alpha: true,
-        antialias: window.devicePixelRatio < 2,
-        powerPreference: "high-performance",
+      let renderer: THREE.WebGLRenderer;
+      try {
+        renderer = new THREE.WebGLRenderer({
+          alpha: true,
+          antialias: window.devicePixelRatio < 2,
+          powerPreference: "high-performance",
+        });
+      } catch (error) {
+        logCharacterError("WebGL renderer initialization failed", error);
+        finishLoading("error");
+        return;
+      }
+      renderer.domElement.addEventListener("webglcontextlost", (event) => {
+        event.preventDefault();
+        logCharacterError("WebGL context was lost");
       });
       renderer.setSize(container.width, container.height);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -51,10 +64,10 @@ const Scene = () => {
       const clock = new THREE.Clock();
 
       const light = setLighting(scene);
-      let progress = setProgress((value) => setLoading(value));
+      const progress = setProgress();
       const { loadCharacter } = setCharacter(renderer, scene, camera);
 
-      loadCharacter().then((gltf) => {
+      loadCharacter().then(({ gltf, source }) => {
         if (gltf) {
           const animations = setAnimations(gltf);
           hoverDivRef.current && animations.hover(gltf, hoverDivRef.current);
@@ -62,9 +75,11 @@ const Scene = () => {
           let character = gltf.scene;
           setChar(character);
           scene.add(character);
+          setIsCharacterReady(true);
           headBone = character.getObjectByName("spine006") || null;
           screenLight = character.getObjectByName("screenlight") || null;
           progress.loaded().then(() => {
+            finishLoading(source === "fallback" ? "fallback" : "ready");
             setTimeout(() => {
               light.turnOnLights();
               animations.startIntro();
@@ -74,6 +89,9 @@ const Scene = () => {
             handleResize(renderer, camera, canvasDiv, character)
           );
         }
+      }).catch((error) => {
+        logCharacterError("Character load pipeline failed", error);
+        progress.failed().then(() => finishLoading("error"));
       });
 
       let mouse = { x: 0, y: 0 },
@@ -128,6 +146,7 @@ const Scene = () => {
       };
       animate();
       return () => {
+        progress.clear();
         clearTimeout(debounce);
         scene.clear();
         renderer.dispose();
@@ -149,7 +168,10 @@ const Scene = () => {
   return (
     <>
       <div className="character-container">
-        <div className="character-model" ref={canvasDiv}>
+        <div
+          className={`character-model ${isCharacterReady ? "character-model-ready" : ""}`}
+          ref={canvasDiv}
+        >
           <div className="character-rim"></div>
           <div className="character-hover" ref={hoverDivRef}></div>
         </div>

@@ -1,19 +1,15 @@
 import {
-  createContext,
   PropsWithChildren,
-  useContext,
+  useCallback,
   useEffect,
+  useRef,
   useState,
 } from "react";
 import Loading from "../components/Loading";
+import { LoadingContext, type CharacterLoaderState } from "./LoadingContext";
+import { initialFX } from "../components/utils/initialFX";
 
-interface LoadingType {
-  isLoading: boolean;
-  setIsLoading: (state: boolean) => void;
-  setLoading: (percent: number) => void;
-}
-
-export const LoadingContext = createContext<LoadingType | null>(null);
+const SHELL_PROGRESS_DURATION_MS = 280;
 
 export const LoadingProvider = ({ children }: PropsWithChildren) => {
   const [isLoading, setIsLoading] = useState(() => {
@@ -21,40 +17,60 @@ export const LoadingProvider = ({ children }: PropsWithChildren) => {
     if (window.innerWidth <= 768) return false;
     return true;
   });
-  const [loading, setLoading] = useState(0);
+  const [displayedProgress, setDisplayedProgress] = useState(0);
+  const [loaderState, setLoaderState] = useState<CharacterLoaderState>("loading");
+  const progressFrame = useRef<number>();
+  const finishLoading = useCallback((state: Exclude<CharacterLoaderState, "loading">) => {
+    setLoaderState((currentState) => currentState === "loading" ? state : currentState);
+    if (import.meta.env.DEV) {
+      console.info("[Loader] final state", state);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isLoading) return;
+
+    let startTime: number | undefined;
+    const advanceShellProgress = (time: number) => {
+      startTime ??= time;
+      const progress = Math.min((time - startTime) / SHELL_PROGRESS_DURATION_MS, 1);
+      setDisplayedProgress(Math.round(progress * 100));
+      if (progress < 1) {
+        progressFrame.current = window.requestAnimationFrame(advanceShellProgress);
+      }
+    };
+
+    progressFrame.current = window.requestAnimationFrame(advanceShellProgress);
+    return () => {
+      if (progressFrame.current !== undefined) {
+        window.cancelAnimationFrame(progressFrame.current);
+      }
+    };
+  }, [isLoading]);
 
   const value = {
     isLoading,
+    loaderState,
     setIsLoading,
-    setLoading,
+    finishLoading,
   };
   useEffect(() => {
     // Auto-start animations on mobile since there's no 3D model
     if (window.innerWidth <= 768) {
-      import("../components/utils/initialFX").then((module) => {
-        if (module.initialFX) {
-          setTimeout(() => {
-            module.initialFX();
-          }, 100);
-        }
-      });
+      const timeoutId = window.setTimeout(initialFX, 100);
+      return () => window.clearTimeout(timeoutId);
     }
   }, []);
 
-  useEffect(() => {}, [loading]);
-
   return (
-    <LoadingContext.Provider value={value as LoadingType}>
-      {isLoading && <Loading percent={loading} />}
+    <LoadingContext.Provider value={value}>
+      {isLoading && <Loading percent={displayedProgress} />}
       <main className="main-body">{children}</main>
     </LoadingContext.Provider>
   );
 };
 
-export const useLoading = () => {
-  const context = useContext(LoadingContext);
-  if (!context) {
-    throw new Error("useLoading must be used within a LoadingProvider");
-  }
-  return context;
-};
+// Preserve the original public API for existing consumers and Vite's HMR
+// boundary. The definitions live in LoadingContext to keep this component file
+// component-focused.
+export { LoadingContext, useLoading } from "./LoadingContext";

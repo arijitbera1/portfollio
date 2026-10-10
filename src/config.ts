@@ -1,192 +1,140 @@
 export const config = {
     developer: {
-        name: "Redoyanul",
-        fullName: "Redoyanul Haque",
-        title: "AI & Full-Stack Developer",
-        description: "AI & Full-Stack Developer building intelligent systems and modern web applications. Passionate about machine learning, deep learning, and creating next-gen autonomous agents."
-    },
+      name: "Arijit",
+      fullName: "Arijit Bera",
+      title: "CSE Student & Aspiring Android Developer",
+      description:
+        "Computer Science student passionate about Android development, Kotlin, Flutter, and Artificial Intelligence. I enjoy building useful applications and learning modern technologies."
+     },
     social: {
-        github: "red1-for-hek",
-        email: "redoyanul1234@gmail.com",
-        location: "Bangladesh"
+        github: "arijit15aug",
+        email: "arijitbera15aug@gmail.com",
+        location: "Kolkata, India"
     },
     about: {
         title: "About Me",
-        description: "I am a self-taught AI & Full-Stack Developer from Bangladesh. I build intelligent systems, chatbots, and modern web applications. My expertise includes Machine Learning, Deep Learning, NLP, and Full-Stack Web Development with React, Node.js, and Python. Currently building next-gen AI Agents and JARVIS-like Personal Assistants. I have a competitive programming mindset and a deep passion for automation. Code is poetry, AI is the canvas."
+        description:
+          "I am a Computer Science and Engineering student passionate about Android development, mobile applications, Artificial Intelligence, and modern software development. I enjoy learning new technologies and building practical projects using Kotlin, Flutter, Python, and web technologies."
     },
     experiences: [
         {
-            position: "Learning Something New",
-            company: "Self-Development",
-            period: "2025 - Present",
-            location: "Bangladesh",
-            description: "Continuously exploring emerging technologies, researching advanced AI systems, and pushing the boundaries of what's possible in tech.",
+            position: "CSE Student & Aspiring Android Developer",
+            company: "Independent Learning & Personal Projects",
+            period: "Present",
+            location: "Kolkata, India",
+            description: "Building practical applications while developing skills in Android development, computer science, and modern software tools.",
             responsibilities: [
-                "Researching cutting-edge AI and ML technologies",
-                "Experimenting with new frameworks and tools",
-                "Contributing to open-source projects",
-                "Building innovative personal projects"
+                "Learning Android development with Kotlin",
+                "Exploring Flutter and mobile application development",
+                "Building personal projects and strengthening core programming skills"
             ],
-            technologies: ["Research", "Innovation", "Open Source", "New Tech"]
+            technologies: ["Kotlin", "Flutter", "Android Development", "Python", "Git"]
         },
         {
-            position: "AI Engineer",
-            company: "Freelance & Projects",
-            period: "2025",
-            location: "Bangladesh",
-            description: "Developing intelligent AI systems, chatbots, and machine learning solutions. Building next-gen conversational AI agents and JARVIS-like personal assistants.",
-            responsibilities: [
-                "Building AI-powered chatbots and conversational agents",
-                "Developing machine learning models with TensorFlow and PyTorch",
-                "Working with LLMs and transformer architectures",
-                "Creating autonomous AI systems and automation tools"
-            ],
-            technologies: ["Python", "TensorFlow", "PyTorch", "LLMs", "NLP", "AI Agents"]
-        },
-        {
-            position: "Full-Stack Developer",
-            company: "Freelance & Projects",
-            period: "2024",
-            location: "Bangladesh",
-            description: "Built complete web applications from frontend to backend. Developed responsive UIs, RESTful APIs, and database solutions for various clients and projects.",
-            responsibilities: [
-                "Developing full-stack web applications using React and Node.js",
-                "Building RESTful APIs and integrating databases",
-                "Creating responsive and interactive user interfaces",
-                "Deploying and maintaining web applications"
-            ],
-            technologies: ["React", "Node.js", "MongoDB", "Express", "Next.js", "TypeScript"]
-        },
-        {
-            position: "Python Developer",
-            company: "Self-Taught & Projects",
+            position: "Higher Secondary Schooling",
+            company: "West Bengal Council of Higher Secondary Education",
             period: "2023",
-            location: "Bangladesh",
-            description: "Dove deep into Python programming, building automation scripts, bots, and mastering the fundamentals of software development and problem-solving.",
+            location: "West Bengal, India",
+            description: "Finished secondary education in Science, developing core problem-solving skills and initiating independent study in programming fundamentals.",
             responsibilities: [
-                "Learning Python programming and core concepts",
-                "Building automation scripts and Discord bots",
-                "Exploring data structures and algorithms",
-                "Participating in competitive programming"
+                "Completed Higher Secondary education with a focus on Science subjects",
+                "Developed problem-solving and analytical skills through coursework",
+                "Initiated independent learning in programming and computer science"
             ],
-            technologies: ["Python", "Automation", "Scripting", "Discord.py", "Problem Solving"]
+            technologies: ["Mathematics", "Physics", "Chemistry", "Computer Science"]
         },
-        {
-            position: "Graphic Designer",
-            company: "Freelance",
-            period: "2022",
-            location: "Bangladesh",
-            description: "Started my creative journey as a graphic designer, creating logos, banners, and visual content. This sparked my passion for technology and digital creation.",
-            responsibilities: [
-                "Designing logos and brand identity materials",
-                "Creating social media graphics and banners",
-                "Working with clients on creative projects",
-                "Learning design principles and visual aesthetics"
-            ],
-            technologies: ["Photoshop", "Illustrator", "Canva", "Figma", "Visual Design"]
-        },
-        {
-            position: "Microsoft Office",
-            company: "Begin Learning",
+         {
+            position: "Secondary Education (Class X)",
+            company: "West Bengal Board of Secondary Education",
             period: "2021",
-            location: "Bangladesh",
-            description: "Started my journey into the digital world by learning Microsoft Office tools. This foundational step introduced me to computers and sparked my curiosity for technology.",
+            location: "West Bengal, India",
+            description: "Completed board examinations with distinction under WBBSE, achieving 86% overall with a strong focus on core Science and Mathematics subjects.",
             responsibilities: [
-                "Learning Microsoft Word, Excel, and PowerPoint",
-                "Creating documents and presentations",
-                "Understanding basic computer operations",
-                "Building foundational digital skills"
+                "Completed Class X board examinations with distinction under WBBSE",
+                "Achieved 86% overall, demonstrating strong academic performance",
+                "Focused on core Science and Mathematics subjects, laying the foundation for future studies"
             ],
-            technologies: ["MS Word", "MS Excel", "MS PowerPoint", "Computer Basics"]
+            technologies: []
         }
     ],
     projects: [
         {
-            id: 1,
-            title: "Drishti",
-            category: "AI / LLM",
-            technologies: "Python, PyTorch, Transformers, FastAPI, React, MongoDB",
-            image: "/images/Drishti.png",
-            description: "Bangladesh's first intelligent advanced AI chatbot powered by a custom Large Language Model. Features natural language understanding, contextual conversations, and multilingual support including Bengali.",
-            link: "https://huggingface.co/red1-for-hek/drishti-ilm-x1"
+          id: 1,
+          title: "Pdf Seva",
+          category: "Web Application",
+          technologies:
+              "Python, FastAPI, JavaScript, HTML, CSS, SQLite, LibreOffice, PyMuPDF, Pillow",
+          image: "/images/pdf-seva.jpg",
+          description:
+              "A web-based PDF tools platform that provides document conversion and PDF utilities. Features include Office to PDF conversion, JPG to PDF, PDF compression, PDF to PNG conversion, merging and splitting PDFs, along with user authentication.",
+          link: "https://pdf-seva.onrender.com/"
         },
         {
             id: 2,
-            title: "VoteChain",
-            category: "Blockchain",
-            technologies: "Solidity, Web3.js, React, Ethereum, IPFS, MetaMask, Node.js",
-            image: "/images/VoteChain.png",
-            description: "A decentralized election system built on blockchain technology ensuring transparent, tamper-proof, and verifiable voting. Features smart contracts for vote integrity and real-time result tracking.",
-            link: "https://github.com/red1-for-hek/smart-election-by-blockchain"
+            title: "Imaginer Studio",
+            category: "Project",
+            technologies: "Python, Streamlit, OpenAI API, HTML, CSS",
+            image: "/images/imaginer_logo.png",
+            description: "A web application that utilizes OpenAI's API to generate images based on user prompts. Users can input text prompts, and the application generates corresponding images using AI models.",
+            link: "https://imaginer-studio.streamlit.app"
         },
         {
             id: 4,
-            title: "Flood Spaces 2.0",
-            category: "AI / ML",
-            technologies: "Python, TensorFlow, Pandas, React, FastAPI, GIS",
-            image: "/images/FloodSpaces.png",
-            description: "Predicts flood risks across Bangladesh up to one month in advance and sends early alerts to help people prepare.",
-            link: "https://github.com/red1-for-hek/Flood-Spaces-2.0"
+            title: "Project Details Coming Soon",
+            category: "Project",
+            technologies: "Details coming soon",
+            image: "/images/placeholder.webp",
+            description: "Project information will be added after it is ready to share.",
+            link: ""
         },
         {
             id: 5,
-            title: "Phoenix 3.0",
-            category: "AI Assistant",
-            technologies: "Python, Speech Recognition, PyAutoGUI, OpenAI API, Tkinter",
-            image: "/images/Phoenix3.0.png",
-            description: "A JARVIS-inspired personal AI desktop assistant. Controls system functions, manages tasks, answers queries, automates workflows, and provides voice-activated computing experience.",
-            link: "https://github.com/red1-for-hek/phoenix3.0"
-        },
-        {
-            id: 6,
-            title: "RedxChess",
-            category: "AI / Game Engine",
-            technologies: "Python, C++, Neural Networks, Bitboards, UCI Protocol",
-            image: "/images/RedxChess.png",
-            description: "A high-performance chess engine rated 3640 ELO. Features advanced search algorithms, neural network evaluation, and optimized bitboard representation for lightning-fast move generation.",
-            link: "/play"
+            title: "Project Details Coming Soon",
+            category: "Project",
+            technologies: "Details coming soon",
+            image: "/images/placeholder.webp",
+            description: "Project information will be added after it is ready to share.",
+            link: ""
         },
         {
             id: 7,
-            title: "Prodesk",
-            category: "E-commerce",
-            technologies: "React, Node.js, MongoDB, Express, Stripe",
-            image: "/images/Prodesk.png",
-            description: "A complete e-commerce platform with secure checkout and smooth product browsing.",
-            link: "https://github.com/red1-for-hek/prodesk"
+            title: "Project Details Coming Soon",
+            category: "Project",
+            technologies: "Details coming soon",
+            image: "/images/placeholder.webp",
+            description: "Project information will be added after it is ready to share.",
+            link: ""
         },
         {
             id: 8,
-            title: "HekTools",
-            category: "Security / Android",
-            technologies: "Kotlin, Android SDK, Firebase, Python, Encryption",
-            image: "/images/hektools.png",
-            description: "An advanced Android monitoring and security research tool. Features remote device management, activity logging, and encrypted data transmission for security testing purposes.",
+            title: "Project Details Coming Soon",
+            category: "Project",
+            technologies: "Details coming soon",
+            image: "/images/placeholder.webp",
+            description: "Project information will be added after it is ready to share.",
             link: ""
         }
     ],
     contact: {
-        email: "redoyanul1234@gmail.com",
-        github: "https://github.com/red1-for-hek",
-        linkedin: "https://linkedin.com/in/red1-for-hek",
-        twitter: "https://x.com/red_1_ul",
-        facebook: "https://www.facebook.com/redoyanulhaque.hacker.official",
-        instagram: "https://www.instagram.com/red_1_ul"
+        email: "arijitbera15aug@gmail.com",
+        github: "https://github.com/arijit15aug",
+        linkedin: "https://www.linkedin.com/in/arijit-bera-561498255/",
+        twitter: "https://x.com/arijitb15",
+        facebook: "https://www.facebook.com/arijitbera",
+        instagram: "https://www.instagram.com/arijitb15"
     },
     skills: {
         develop: {
-            title: "AI DEVELOPER",
-            description: "Building intelligent systems & AI solutions",
-            details: "Developing AI agents, chatbots, and machine learning models using Python, TensorFlow, and PyTorch. Specializing in LLMs, NLP, deep learning, and autonomous systems.",
-            tools: ["Python", "TensorFlow", "PyTorch", "OpenCV", "Scikit-learn", "LLMs", "NLP", "Deep Learning", "Chatbots", "AI Agents"]
+            title: "ANDROID DEVELOPMENT",
+            description: "Learning to build useful mobile applications",
+            details: "Developing Android and cross-platform mobile development skills through coursework and personal projects.",
+            tools: ["Kotlin", "Android Studio", "Flutter", "Dart", "Firebase", "Git"]
         },
         design: {
-            title: "FULL-STACK",
-            description: "Modern web development & scalable applications",
-            details: "Building responsive and performant web applications using React, Next.js, Node.js, and databases. Creating seamless user experiences with modern UI/UX principles.",
-            tools: ["React", "Next.js", "Node.js", "TypeScript", "MongoDB", "PostgreSQL", "TailwindCSS", "REST APIs", "Docker", "Git"]
+            title: "COMPUTER SCIENCE",
+            description: "Exploring software development foundations",
+            details: "Strengthening programming, problem-solving, and modern software development skills alongside Android development.",
+            tools: ["C", "Java", "Python", "Data Structures", "Algorithms", "Git"]
         }
     }
 };
-
-

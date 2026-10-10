@@ -1,5 +1,5 @@
 .cursor-main {
-  --size: 0px;
+  --size: 12px;
   position: fixed;
   top: calc(var(--size) / -2);
   left: calc(var(--size) / -2);
@@ -7,14 +7,22 @@
   height: var(--size);
   border-radius: 50px;
   pointer-events: none;
-  z-index: 99;
-  background-color: #e6c3ff;
-  box-shadow: 0px 0px 30px 0px rgb(175, 131, 255);
-  mix-blend-mode: difference;
-  transition: top 0.3s ease-out, left 0.3s ease-out, width 0.3s ease-out,
-    height 0.3s ease-out;
+  z-index: 9998;
+  background-color: var(--accentColor);
+  box-shadow: 0 0 7px rgba(194, 164, 255, 0.38);
+  transition: top 0.3s ease-out, left 0.3s ease-out, width 0.22s ease-out,
+    height 0.22s ease-out, box-shadow 0.22s ease-out, background-color 0.22s ease-out,
+    opacity 0.2s ease-out;
 }
-.cursor-icons {
+
+.cursor-main.cursor-hover {
+  --size: 20px;
+  background-color: #e6d8ff;
+  box-shadow: 0 0 10px rgba(194, 164, 255, 0.9), 0 0 24px rgba(161, 116, 255, 0.42);
+}
+
+.cursor-main.cursor-icons {
+  --size: 50px;
   top: 10px;
   left: 10px;
   height: calc(var(--cursorH) - 20px);
@@ -23,11 +31,71 @@
 .cursor-disable {
   --size: 0px;
 }
+
+.cursor-trails {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9997;
+  transition: opacity 0.2s ease-out;
+}
+
+.cursor-hidden {
+  opacity: 0;
+}
+
+.cursor-trail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  background: rgba(194, 164, 255, 0.24);
+  box-shadow: 0 0 14px rgba(194, 164, 255, 0.3);
+  filter: blur(5px);
+  will-change: transform, opacity;
+}
+
+.cursor-trail:nth-child(2) {
+  width: 22px;
+  height: 22px;
+}
+
+.cursor-trail:nth-child(3) {
+  width: 17px;
+  height: 17px;
+}
+
+.cursor-trail:nth-child(4) {
+  width: 13px;
+  height: 13px;
+}
+
+a.cursor-target-active,
+button.cursor-target-active,
+[data-cursor].cursor-target-active:not(.social-icons) {
+  filter: drop-shadow(0 0 7px rgba(194, 164, 255, 0.4));
+  transition: filter 0.22s ease;
+}
+
+.resume-button.cursor-target-active {
+  box-shadow: 0 0 18px rgba(194, 164, 255, 0.32);
+}
 @media only screen and (min-width: 600px) {
   .cursor-main {
-    --size: 50px;
+    --size: 12px;
   }
   .cursor-disable {
     --size: 0px;
+  }
+}
+
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor-main,
+  .cursor-trails {
+    display: none;
   }
 }

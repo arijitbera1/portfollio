@@ -6,7 +6,7 @@ A modern, high-performance **3D developer portfolio website** built with **React
 
 If you’re a developer looking for a **portfolio template** that feels premium, interactive, and memorable—this repo is for you.
 
-> Live preview: https://www.redoyanulhaque.me/
+> Personal portfolio for Arijit Bera.
 
 ---
 
@@ -35,7 +35,7 @@ If you’re a developer looking for a **portfolio template** that feels premium,
 ### 1) Clone
 
 ```bash
-git clone https://github.com/red1-for-hek/portfolio-website.git
+git clone <your-repository-url>
 cd portfolio-website
 ```
 
@@ -56,6 +56,19 @@ npm run dev
 ```bash
 npm run build
 ```
+
+---
+
+## ✨ Ask Arijit AI
+
+The portfolio includes a floating assistant backed by the serverless `POST /api/chat` endpoint. It uses only the portfolio facts in `api/portfolioKnowledge.js`.
+
+1. Copy `.env.example` to `.env`.
+2. Set `OPENAI_API_KEY` to an OpenAI API key. Never use a `VITE_` variable for this key.
+3. Optionally set `OPENAI_MODEL` (the default is `gpt-5.6-luna`).
+4. For the frontend alone, run `npm run dev`. To test the Vercel serverless endpoint locally too, run `npm run dev:vercel`.
+
+For Vercel deployment, add `OPENAI_API_KEY` and optionally `OPENAI_MODEL` in the project Environment Variables settings, then deploy. The key is only read by `api/chat.js` on the server.
 
 ---
 
@@ -82,7 +95,7 @@ If you found this useful:
 
 ## 🤝 Connect
 
-- LinkedIn: https://www.linkedin.com/in/red1-for-hek/
+- Email: arijitbera15aug@gmail.com
 
 ---
 

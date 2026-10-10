@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { MdArrowOutward } from "react-icons/md";
 import { Link } from "react-router-dom";
+import ProjectImage, { publicAssetUrl } from "./ProjectImage";
 
 interface Props {
   image: string;
@@ -16,13 +17,19 @@ const WorkImage = (props: Props) => {
 
   const handleMouseEnter = async () => {
     if (props.video) {
-      setIsVideo(true);
-      const response = await fetch(`src/assets/${props.video}`);
-      const blob = await response.blob();
-      const blobUrl = URL.createObjectURL(blob);
-      setVideo(blobUrl);
+      try {
+        const response = await fetch(publicAssetUrl(props.video));
+        if (!response.ok) throw new Error(`Video request failed (${response.status})`);
+        const blobUrl = URL.createObjectURL(await response.blob());
+        setVideo(blobUrl);
+        setIsVideo(true);
+      } catch (error) {
+        if (import.meta.env.DEV) console.error("[Work] preview video failed", error);
+      }
     }
   };
+
+  const image = <ProjectImage src={props.image} alt={props.alt ?? "Project image"} />;
 
   return (
     <div className="work-image">
@@ -40,7 +47,7 @@ const WorkImage = (props: Props) => {
             <div className="work-link">
               <MdArrowOutward />
             </div>
-            <img src={props.image} alt={props.alt} loading="lazy" decoding="async" />
+            {image}
             {isVideo && <video src={video} autoPlay muted playsInline loop></video>}
           </a>
         ) : (
@@ -54,7 +61,7 @@ const WorkImage = (props: Props) => {
             <div className="work-link">
               <MdArrowOutward />
             </div>
-            <img src={props.image} alt={props.alt} loading="lazy" decoding="async" />
+            {image}
             {isVideo && <video src={video} autoPlay muted playsInline loop></video>}
           </Link>
         )
@@ -65,7 +72,7 @@ const WorkImage = (props: Props) => {
           onMouseLeave={() => setIsVideo(false)}
           data-cursor={"disable"}
         >
-          <img src={props.image} alt={props.alt} loading="lazy" decoding="async" />
+          {image}
           {isVideo && <video src={video} autoPlay muted playsInline loop></video>}
         </div>
       )}

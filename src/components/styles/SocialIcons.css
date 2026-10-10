@@ -16,10 +16,29 @@
   gap: 8px;
   z-index: 999;
   padding: 10px;
+  border-radius: 35px;
+  isolation: isolate;
+  transition: color 0.22s ease-out;
+}
+.social-icons::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  background: rgba(194, 164, 255, 0.9);
+  box-shadow: 0 0 18px rgba(194, 164, 255, 0.48),
+    0 0 36px rgba(161, 116, 255, 0.26);
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.22s ease-out, transform 0.22s ease-out;
 }
 .social-icons:hover {
-  transition: 0.3s;
   color: var(--backgroundColor);
+}
+.social-icons:hover::before {
+  opacity: 1;
+  transform: scale(1);
 }
 .social-icons a:hover {
   color: var(--backgroundColor);
@@ -30,6 +49,7 @@
   height: 50px;
   position: relative;
   display: flex;
+  z-index: 1;
 }
 .social-icons a {
   --siLeft: 50%;
@@ -41,7 +61,7 @@
   display: flex;
   font-size: 23px;
   will-change: left, top;
-  transition: transform 0.3s ease-out;
+  transition: transform 0.3s ease-out, color 0.22s ease-out;
 }
 .resume-button {
   position: absolute;

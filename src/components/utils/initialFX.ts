@@ -7,20 +7,32 @@ export function initialFX() {
   if (lenis) {
     lenis.start();
   }
-  document.getElementsByTagName("main")[0].classList.add("main-active");
   gsap.to("body", {
     backgroundColor: "#0b080c",
     duration: 0.5,
     delay: 1,
   });
 
+  gsap.fromTo(
+    [".header", ".icons-section", ".nav-fade"],
+    { opacity: 0 },
+    {
+      opacity: 1,
+      duration: 1.2,
+      ease: "power1.inOut",
+      delay: 0.1,
+    }
+  );
+}
+
+export function startHeroTextAnimation(scope: ParentNode) {
   const selectors = [".landing-info h3", ".landing-intro h2", ".landing-intro h1"];
-  const elements = selectors.flatMap(selector => Array.from(document.querySelectorAll(selector)));
-  var landingText = new TextSplitter(elements, {
+  const elements = selectors.flatMap((selector) => Array.from(scope.querySelectorAll(selector)));
+  const landingText = new TextSplitter(elements, {
     type: "chars,lines",
     linesClass: "split-line",
   });
-  gsap.fromTo(
+  const heroTextAnimation = gsap.fromTo(
     landingText.chars,
     { opacity: 0, y: 80, filter: "blur(5px)" },
     {
@@ -34,10 +46,13 @@ export function initialFX() {
     }
   );
 
-  let TextProps = { type: "chars,lines", linesClass: "split-h2" };
+  const textProps = { type: "chars,lines", linesClass: "split-h2" };
 
-  var landingText2 = new TextSplitter(".landing-h2-info", TextProps);
-  gsap.fromTo(
+  const landingText2 = new TextSplitter(
+    Array.from(scope.querySelectorAll(".landing-h2-info")),
+    textProps
+  );
+  const subtitleAnimation = gsap.fromTo(
     landingText2.chars,
     { opacity: 0, y: 80, filter: "blur(5px)" },
     {
@@ -51,8 +66,8 @@ export function initialFX() {
     }
   );
 
-  gsap.fromTo(
-    ".landing-info-h2",
+  const roleAnimation = gsap.fromTo(
+    Array.from(scope.querySelectorAll(".landing-info-h2")),
     { opacity: 0, y: 30 },
     {
       opacity: 1,
@@ -60,25 +75,39 @@ export function initialFX() {
       ease: "power1.inOut",
       y: 0,
       delay: 0.8,
+      onComplete: () => {
+        if (import.meta.env.DEV) console.info("[TextAnimation] animation completed");
+      },
     }
   );
-  gsap.fromTo(
-    [".header", ".icons-section", ".nav-fade"],
-    { opacity: 0 },
-    {
-      opacity: 1,
-      duration: 1.2,
-      ease: "power1.inOut",
-      delay: 0.1,
-    }
+  const landingText3 = new TextSplitter(
+    Array.from(scope.querySelectorAll(".landing-h2-info-1")),
+    textProps
+  );
+  const landingText4 = new TextSplitter(
+    Array.from(scope.querySelectorAll(".landing-h2-1")),
+    textProps
+  );
+  const landingText5 = new TextSplitter(
+    Array.from(scope.querySelectorAll(".landing-h2-2")),
+    textProps
   );
 
-  var landingText3 = new TextSplitter(".landing-h2-info-1", TextProps);
-  var landingText4 = new TextSplitter(".landing-h2-1", TextProps);
-  var landingText5 = new TextSplitter(".landing-h2-2", TextProps);
+  const subtitleLoop = LoopText(landingText2, landingText3);
+  const roleLoop = LoopText(landingText4, landingText5);
 
-  LoopText(landingText2, landingText3);
-  LoopText(landingText4, landingText5);
+  return () => {
+    heroTextAnimation.kill();
+    subtitleAnimation.kill();
+    roleAnimation.kill();
+    subtitleLoop.kill();
+    roleLoop.kill();
+    landingText.revert();
+    landingText2.revert();
+    landingText3.revert();
+    landingText4.revert();
+    landingText5.revert();
+  };
 }
 
 function LoopText(Text1: TextSplitter, Text2: TextSplitter) {
@@ -86,7 +115,7 @@ function LoopText(Text1: TextSplitter, Text2: TextSplitter) {
   const delay = 4;
   const delay2 = delay * 2 + 1;
 
-  tl.fromTo(
+  return tl.fromTo(
     Text2.chars,
     { opacity: 0, y: 80 },
     {

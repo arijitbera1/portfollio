@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { RGBELoader } from "three-stdlib";
 import { gsap } from "gsap";
+import { characterAssetUrl, logCharacterError } from "./assets";
 
 const setLighting = (scene: THREE.Scene) => {
   const directionalLight = new THREE.DirectionalLight(0xc7a9ff, 0);
@@ -19,13 +20,12 @@ const setLighting = (scene: THREE.Scene) => {
   scene.add(pointLight);
 
   new RGBELoader()
-    .setPath("/models/")
-    .load("char_enviorment.hdr", function (texture) {
+    .load(characterAssetUrl("models/char_enviorment.hdr"), function (texture) {
       texture.mapping = THREE.EquirectangularReflectionMapping;
       scene.environment = texture;
       scene.environmentIntensity = 0;
       scene.environmentRotation.set(5.76, 85.85, 1);
-    });
+    }, undefined, (error) => logCharacterError("HDR environment loading failed", error));
 
   function setPointLight(screenLight: any) {
     if (screenLight.material.opacity > 0.9) {

@@ -1,4 +1,6 @@
+import { useEffect, useRef } from "react";
 import "./styles/TechStackNew.css";
+import { publicAssetUrl } from "./ProjectImage";
 
 interface TechItem {
   name: string;
@@ -72,8 +74,60 @@ const techStack: TechItem[][] = [
 ];
 
 const TechStackNew = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const hasLoggedPointer = useRef(false);
+
+  useEffect(() => {
+    if (!import.meta.env.DEV) return;
+
+    const section = sectionRef.current;
+    const video = videoRef.current;
+    if (!section) return;
+
+    const cards = section.querySelectorAll<HTMLAnchorElement>(".techstack-item");
+    const hoverCapable = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    console.info("[TechStack] mounted", {
+      cards: cards.length,
+      hoverCapable,
+      reducedMotion: window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+      viewport: `${window.innerWidth}x${window.innerHeight}`,
+    });
+    console.info("[TechStack] CSS hover is the card interaction; no GSAP, canvas, or ScrollTrigger timeline is used.");
+
+    const observer = new IntersectionObserver(([entry]) => {
+      console.info("[TechStack] viewport intersection", {
+        isIntersecting: entry.isIntersecting,
+        ratio: entry.intersectionRatio,
+      });
+    }, { threshold: [0, 0.1, 0.5] });
+    observer.observe(section);
+
+    const onPointerMove = (event: PointerEvent) => {
+      if (hasLoggedPointer.current) return;
+      hasLoggedPointer.current = true;
+      console.info("[TechStack] first pointer event received", {
+        pointerType: event.pointerType,
+        target: event.target instanceof Element ? event.target.closest(".techstack-item")?.className ?? event.target.tagName : "unknown",
+      });
+    };
+    const onVideoPlay = () => console.info("[TechStack] background video playing");
+    const onVideoError = () => console.error("[TechStack] background video failed", video?.error);
+
+    section.addEventListener("pointermove", onPointerMove);
+    video?.addEventListener("play", onVideoPlay);
+    video?.addEventListener("error", onVideoError);
+
+    return () => {
+      observer.disconnect();
+      section.removeEventListener("pointermove", onPointerMove);
+      video?.removeEventListener("play", onVideoPlay);
+      video?.removeEventListener("error", onVideoError);
+    };
+  }, []);
+
   return (
-    <div className="techstack-new">
+    <div className="techstack-new" ref={sectionRef}>
       {/* Video Background */}
       <div className="techstack-video-container">
         <video
@@ -82,8 +136,9 @@ const TechStackNew = () => {
           muted
           playsInline
           className="techstack-video"
+          ref={videoRef}
         >
-          <source src="/video/video.webm" type="video/webm" />
+          <source src={publicAssetUrl("/video/video.webm")} type="video/webm" />
         </video>
         {/* Dark Overlay */}
         <div className="techstack-overlay"></div>

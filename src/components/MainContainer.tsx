@@ -2,7 +2,6 @@ import { PropsWithChildren, useEffect, useState } from "react";
 import About from "./About";
 import Career from "./Career";
 import Contact from "./Contact";
-import Cursor from "./Cursor";
 import Landing from "./Landing";
 import Navbar from "./Navbar";
 import SocialIcons from "./SocialIcons";
@@ -61,11 +60,10 @@ const MainContainer = ({ children }: PropsWithChildren) => {
 
   return (
     <div className="container-main">
-      <Cursor />
       <Navbar />
       <SocialIcons />
       {isDesktopView && !isMobile && shouldRenderCharacter && children}
-      <div className="container-main">
+      <div className="container-main portfolio-content">
         <Landing />
         <About />
         <WhatIDo />
